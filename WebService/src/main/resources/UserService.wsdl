@@ -1,0 +1,138 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://service.example.org/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             name="UserService"
+             targetNamespace="http://service.example.org/">
+
+
+    <types>
+        <xsd:schema targetNamespace="http://service.example.org/">
+            <xsd:element name="User">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="username" type="xsd:string"/>
+                        <xsd:element name="password" type="xsd:string"/>
+                        <xsd:element name="email" type="xsd:string"/>
+                        <xsd:element name="birthday" type="xsd:date"/>
+                        <xsd:element name="sex" type="xsd:boolean"/>
+                        <xsd:element name="enabled" type="xsd:boolean"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="InsertUserRequest">
+        <part name="user" element="tns:User"/>
+    </message>
+    <message name="InsertUserResponse">
+        <part name="status" type="xsd:string"/>
+    </message>
+
+    <message name="SelectUserRequest"/>
+    <message name="SelectUserResponse">
+        <part name="users" type="xsd:string"/>
+    </message>
+
+    <message name="UpdateUserRequest">
+        <part name="user" element="tns:User"/>
+    </message>
+    <message name="UpdateUserResponse">
+        <part name="status" type="xsd:string"/>
+    </message>
+
+    <message name="DeleteUserRequest">
+        <part name="username" type="xsd:string"/>
+    </message>
+    <message name="DeleteUserResponse">
+        <part name="status" type="xsd:string"/>
+    </message>
+
+    <message name="GetUserByUsernameRequest">
+        <part name="username" type="xsd:string"/>
+    </message>
+    <message name="GetUserByUsernameResponse">
+        <part name="user" element="tns:User"/>
+    </message>
+
+    <portType name="UserServicePortType">
+        <operation name="InsertUser">
+            <input message="tns:InsertUserRequest"/>
+            <output message="tns:InsertUserResponse"/>
+        </operation>
+        <operation name="SelectUser">
+            <input message="tns:SelectUserRequest"/>
+            <output message="tns:SelectUserResponse"/>
+        </operation>
+        <operation name="UpdateUser">
+            <input message="tns:UpdateUserRequest"/>
+            <output message="tns:UpdateUserResponse"/>
+        </operation>
+        <operation name="DeleteUser">
+            <input message="tns:DeleteUserRequest"/>
+            <output message="tns:DeleteUserResponse"/>
+        </operation>
+        <operation name="GetUserByUsername">
+            <input message="tns:GetUserByUsernameRequest"/>
+            <output message="tns:GetUserByUsernameResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="UserServiceBinding" type="tns:UserServicePortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="InsertUser">
+            <soap:operation soapAction="insertUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="SelectUser">
+            <soap:operation soapAction="selectUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="UpdateUser">
+            <soap:operation soapAction="updateUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="DeleteUser">
+            <soap:operation soapAction="deleteUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetUserByUsername">
+            <soap:operation soapAction="getUserByUsername"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="UserService">
+        <documentation>Web Service for User Operations</documentation>
+        <port name="UserServicePort" binding="tns:UserServiceBinding">
+            <soap:address location="http://localhost:8080/UserService"/>
+        </port>
+    </service>
+
+</definitions>
